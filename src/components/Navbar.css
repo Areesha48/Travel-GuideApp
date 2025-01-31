@@ -1,0 +1,89 @@
+/* Navbar Container */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Logo Section */
+.navbar-logo {
+  font-size: 20px;
+  font-weight: bold;
+  text-decoration: none;
+  color: #fff;
+}
+
+/* Menu Icon (Hamburger) */
+.navbar-toggler {
+  display: none;
+  font-size: 24px;
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+}
+
+/* Navigation Links */
+.navbar-links {
+  display: flex;
+  gap: 15px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Links Styling */
+.navbar-link {
+  text-decoration: none;
+  color: #fff;
+  font-size: 16px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  transition: background 0.3s;
+}
+
+.navbar-link:hover {
+  background-color: #0056b3;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  /* Show Toggler Button */
+  .navbar-toggler {
+      display: block;
+      position: absolute;
+      right: 20px;
+      top: 5px;
+  }
+
+  /* Initially Hide Links */
+  .navbar-links {
+      display: none;
+      flex-direction: column;
+      position: absolute;
+      top: 60px;
+      right: 0;
+      background-color: #007bff;
+      width: 200px;
+      box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+      padding: 10px 0;
+  }
+
+  /* Show Menu when active */
+  .navbar-links.active {
+      display: flex;
+  }
+
+  .navbar-links li {
+      text-align: center;
+      padding: 10px 0;
+  }
+}
