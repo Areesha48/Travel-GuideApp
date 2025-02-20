@@ -1,5 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   return (
@@ -7,36 +8,88 @@ const Home = () => {
       style={{
         textAlign: "center",
         fontFamily: "Arial, sans-serif",
-        padding: "50px 20px",
-        backgroundImage: 'url("/images/bgimg2.jpeg")',
+        padding: "0",
+        backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("/images/bgimg2.jpeg")',
         backgroundSize: "cover",
         backgroundPosition: "center",
-        backgroundrepeat: "no-repeat",
+        backgroundAttachment: "fixed",
         color: "#fff",
-        height: "100vh",
+        minHeight: "100vh",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
       }}
     >
-      {/* Heading Animation */}
-      <motion.h1
-        initial={{ opacity: 0, y: -30 }}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1 }}
-        style={{ fontSize: "2.5rem", marginBottom: "10px", fontWeight: "bold" }}
+        style={{
+          backgroundColor: 'rgba(0, 0, 0, 0.6)',
+          padding: '40px',
+          borderRadius: '15px',
+          maxWidth: '800px',
+          margin: '0 20px'
+        }}
       >
-        Welcome to Travel Guide
-      </motion.h1>
+        <motion.h1
+          style={{
+            fontSize: "3.5rem",
+            marginBottom: "20px",
+            fontWeight: "bold",
+            textShadow: "2px 2px 4px rgba(0,0,0,0.5)",
+          }}
+        >
+          Welcome to Travel Guide
+        </motion.h1>
 
-      {/* Subheading Animation */}
-      <motion.p
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1.5 }}
-        style={{ fontSize: "1.3rem", maxWidth: "600px", margin: "0 auto", lineHeight: "1.6" }}
-      >
-        ✨ Discover the beauty of Pakistan! From the vibrant cities to the majestic mountains, explore the hidden gems of this breathtaking country. 🌍
-      </motion.p>
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5, duration: 1 }}
+          style={{
+            fontSize: "1.5rem",
+            marginBottom: "30px",
+            lineHeight: "1.6",
+          }}
+        >
+          ✨ Discover the beauty of Pakistan! From vibrant cities to majestic mountains, 
+          explore the hidden gems of this breathtaking country. 🌍
+        </motion.p>
 
-
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1, duration: 1 }}
+        >
+          <Link
+            to="/destinations"
+            style={{
+              backgroundColor: "#1a237e",
+              color: "white",
+              padding: "15px 30px",
+              borderRadius: "30px",
+              textDecoration: "none",
+              fontSize: "1.2rem",
+              fontWeight: "bold",
+              display: "inline-block",
+              transition: "transform 0.3s, box-shadow 0.3s",
+              boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
+            }}
+            onMouseOver={(e) => {
+              e.currentTarget.style.transform = "translateY(-3px)";
+              e.currentTarget.style.boxShadow = "0 6px 8px rgba(0,0,0,0.2)";
+            }}
+            onMouseOut={(e) => {
+              e.currentTarget.style.transform = "translateY(0)";
+              e.currentTarget.style.boxShadow = "0 4px 6px rgba(0,0,0,0.1)";
+            }}
+          >
+            Explore Destinations →
+          </Link>
+        </motion.div>
+      </motion.div>
     </div>
   );
 };

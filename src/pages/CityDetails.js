@@ -7,9 +7,9 @@ import L from "leaflet";
 // Fix for default marker icons in Leaflet
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
-  iconRetinaUrl: "https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon-2x.png",
-  iconUrl: "https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png",
-  shadowUrl: "https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png",
+  iconRetinaUrl: require("leaflet/dist/images/marker-icon-2x.png"),
+  iconUrl: require("leaflet/dist/images/marker-icon.png"),
+  shadowUrl: require("leaflet/dist/images/marker-shadow.png"),
 });
 
 const CityDetails = ({ cities }) => {
@@ -40,18 +40,21 @@ const CityDetails = ({ cities }) => {
         <h3 style={styles.subtitle}>Location on Map</h3>
         <MapContainer
           center={[city.coordinates.lat, city.coordinates.lng]}
-          zoom={10}
+          zoom={13}
           style={styles.map}
+          scrollWheelZoom={false}
         >
           {/* OpenStreetMap Tiles */}
           <TileLayer
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
 
           {/* Marker for the city */}
           <Marker position={[city.coordinates.lat, city.coordinates.lng]}>
-            <Popup>{city.name}</Popup>
+            <Popup>
+              <b>{city.name}</b>
+            </Popup>
           </Marker>
         </MapContainer>
       </div>
@@ -63,43 +66,46 @@ const CityDetails = ({ cities }) => {
 const styles = {
   container: {
     padding: "20px",
-    fontFamily: "Arial, sans-serif",
-    textAlign: "center",
-    maxWidth: "800px",
+    maxWidth: "1000px",
     margin: "0 auto",
+    fontFamily: "Arial, sans-serif",
   },
   title: {
-    color: "#007bff",
-    marginBottom: "10px",
-    fontSize: "32px",
-  },
-  image: {
-    width: "100%",
-    maxWidth: "600px",
-    height: "auto",
-    borderRadius: "10px",
-    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
-    marginBottom: "15px",
-  },
-  description: {
-    fontSize: "18px",
-    lineHeight: "1.6",
+    fontSize: "2.5rem",
+    color: "#1a237e",
+    textAlign: "center",
     marginBottom: "20px",
   },
-  mapContainer: {
-    width: "100%",
-    margin: "20px auto",
-  },
-  map: {
-    width: "100%",
-    height: "400px",
+  image: {
+    width: "60%",
+    height: "280px",
+    objectFit: "cover",
     borderRadius: "10px",
-    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+    marginBottom: "20px",
+    boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
+    display: "block",
+    margin: "0 auto 20px",
+  },
+  description: {
+    fontSize: "1.1rem",
+    lineHeight: "1.6",
+    color: "#333",
+    marginBottom: "30px",
+    textAlign: "justify",
+  },
+  mapContainer: {
+    marginTop: "20px",
   },
   subtitle: {
-    fontSize: "24px",
-    marginBottom: "10px",
-    color: "#333",
+    fontSize: "1.8rem",
+    color: "#1a237e",
+    marginBottom: "15px",
+  },
+  map: {
+    height: "400px",
+    width: "100%",
+    borderRadius: "10px",
+    boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
   },
 };
 

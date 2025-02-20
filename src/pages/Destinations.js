@@ -1,9 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import cities from './CitiesData';
+import { motion } from "framer-motion";
 
 const Destinations = () => {
   const [searchQuery, setSearchQuery] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate loading
+    setTimeout(() => setIsLoading(false), 1000);
+  }, []);
 
   // Filter cities based on search query
   const filteredCities = cities.filter((city) =>
@@ -11,11 +18,39 @@ const Destinations = () => {
     city.description.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  return (
-    <div style={{ padding: "20px", fontFamily: "Arial, sans-serif" }}>
-      <h2 style={{ textAlign: "center", marginBottom: "20px" }}>Explore Pakistani Cities</h2>
+  if (isLoading) {
+    return (
+      <div style={{ 
+        display: 'flex', 
+        justifyContent: 'center', 
+        alignItems: 'center', 
+        height: '100vh' 
+      }}>
+        <div className="loading-spinner"></div>
+      </div>
+    );
+  }
 
-      {/* Search Bar */}
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+      style={{ 
+        padding: "40px", 
+        fontFamily: "Arial, sans-serif",
+        backgroundColor: "#f5f5f5"
+      }}
+    >
+      <h2 style={{ 
+        textAlign: "center", 
+        marginBottom: "30px",
+        fontSize: "2.5rem",
+        color: "#1a237e"
+      }}>
+        Explore Pakistani Cities
+      </h2>
+
       <input
         type="text"
         placeholder="Search cities..."
@@ -23,83 +58,104 @@ const Destinations = () => {
         onChange={(e) => setSearchQuery(e.target.value)}
         style={{
           width: "100%",
-          maxWidth: "400px",
-          padding: "10px",
+          maxWidth: "500px",
+          padding: "15px",
           fontSize: "16px",
-          borderRadius: "5px",
-          border: "1px solid #ccc",
-          marginBottom: "20px",
+          borderRadius: "30px",
+          border: "2px solid #e0e0e0",
+          marginBottom: "30px",
           display: "block",
-          margin: "0 auto 20px",
+          margin: "0 auto 30px",
+          boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
         }}
       />
 
-      {/* City Cards */}
-      <div style={{ display: "flex", flexWrap: "wrap", gap: "20px", justifyContent: "center" }}>
+      <motion.div 
+        style={{ 
+          display: "flex", 
+          flexWrap: "wrap", 
+          gap: "30px", 
+          justifyContent: "center" 
+        }}
+      >
         {filteredCities.map((city) => (
-          <div
+          <motion.div
             key={city.id}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            whileHover={{ y: -10 }}
             style={{
-              border: "1px solid #ccc",
-              padding: "10px",
-              width: "250px",
-              transition: "transform 0.3s, box-shadow 0.3s", // Smooth transition
-              borderRadius: "5px",
+              backgroundColor: "#fff",
+              borderRadius: "15px",
+              overflow: "hidden",
+              width: "300px",
+              boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
             }}
-            className="card"
           >
             <img
               src={city.image}
               alt={city.name}
               style={{
                 width: "100%",
-                height: "150px",
+                height: "200px",
                 objectFit: "cover",
-                borderRadius: "5px",
-                transition: "transform 0.3s", // Smooth image transition
               }}
             />
-            <h3>{city.name}</h3>
-            <p>{city.description}</p>
-            <Link
-              to={`/cities/${city.id}`}
-              style={{
-                textDecoration: "none",
-                color: "#fff",
-                background: "#007bff",
-                padding: "5px 10px",
-                borderRadius: "5px",
-                transition: "background-color 0.3s", // Smooth button transition
-              }}
-              className="learn-more"
-            >
-              Learn More
-            </Link>
-          </div>
+            <div style={{ padding: "20px" }}>
+              <h3 style={{ 
+                marginBottom: "10px",
+                color: "#1a237e"
+              }}>{city.name}</h3>
+              <p style={{ 
+                marginBottom: "20px",
+                color: "#666"
+              }}>{city.description}</p>
+              <Link
+                to={`/cities/${city.id}`}
+                style={{
+                  display: "inline-block",
+                  textDecoration: "none",
+                  color: "#fff",
+                  background: "#1a237e",
+                  padding: "10px 20px",
+                  borderRadius: "25px",
+                  transition: "all 0.3s",
+                }}
+                onMouseOver={(e) => {
+                  e.currentTarget.style.transform = "translateY(-2px)";
+                  e.currentTarget.style.boxShadow = "0 4px 8px rgba(0,0,0,0.2)";
+                }}
+                onMouseOut={(e) => {
+                  e.currentTarget.style.transform = "translateY(0)";
+                  e.currentTarget.style.boxShadow = "none";
+                }}
+              >
+                Learn More →
+              </Link>
+            </div>
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
 
-      {/* Inline CSS for hover effects */}
       <style>
         {`
-          /* Hover effect on card */
-          .card:hover {
-            transform: scale(1.05); /* Slight zoom effect */
-            box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2); /* Add shadow on hover */
+          .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #1a237e;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
           }
 
-          /* Hover effect on button */
-          .learn-more:hover {
-            background-color: #0056b3; /* Darken the button background on hover */
-          }
-
-          /* Hover effect on image */
-          .card:hover img {
-            transform: scale(1.1); /* Slight zoom effect on image */
+          @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
           }
         `}
       </style>
-    </div>
+    </motion.div>
   );
 };
 
